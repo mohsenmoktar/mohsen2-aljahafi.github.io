@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>الواحة التقنية · المراسلة المتكاملة</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    body {
+      background: #0a2a1f;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* التطبيق الرئيسي */
+    .oasis-app {
+      width: 100%;
+      max-width: 500px;
+      height: 100vh;
+      background: #f0f2e9;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    }
+
+    /* رأس التطبيق */
+    .app-header {
+      background: linear-gradient(145deg, #1f523e, #154232);
+      padding: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 3px solid #f5c84e;
+      flex-shrink: 0;
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      font-size: 40px;
+      color: #ffde7a;
+      text-shadow: 2px 2px 0 #7b4f1a;
+    }
+
+    .header-text {
+      color: white;
+    }
+
+    .header-ar {
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .header-en {
+      font-size: 12px;
+      color: #ffe599;
+    }
+
+    .designer-badge {
+      background: #00000040;
+      padding: 6px 15px;
+      border-radius: 50px;
+      color: #fff3c9;
+      border: 1px solid #f5c84e;
+      font-size: 14px;
+    }
+
+    /* شاشات تسجيل الدخول */
+    .auth-screen {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(10, 42, 31, 0.98);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      transition: all 0.3s;
+    }
+
+    .auth-card {
+      background: rgba(255, 255, 245, 0.95);
+      border-radius: 50px;
+      padding: 30px;
+      width: 100%;
+      max-width: 450px;
+      border: 3px solid #f5c84e;
+      box-shadow: 0 20px 40px #00000050;
+    }
+
+    .auth-title {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .auth-title i {
+      font-size: 70px;
+      color: #1f523e;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #1f523e;
+      font-weight: 700;
+    }
+
+    .oasis-input {
+      width: 100%;
+      padding: 16px 20px;
+      border: 2px solid #dbb45c;
+      border-radius: 40px;
+      font-size: 16px;
+      background: white;
+    }
+
+    .oasis-input:focus {
+      border-color: #1f523e;
+      outline: none;
+    }
+
+    .phone-prefix {
+      display: flex;
+      border: 2px solid #dbb45c;
+      border-radius: 40px;
+      overflow: hidden;
+    }
+
+    .phone-prefix span {
+      background: #ebe1c1;
+      padding: 16px 20px;
+      font-weight: 900;
+      color: #1f523e;
+    }
+
+    .phone-prefix input {
+      flex: 1;
+      border: none;
+      padding: 16px;
+      direction: ltr;
+    }
+
+    .btn-primary {
+      background: #1f523e;
+      color: white;
+      border: none;
+      border-radius: 40px;
+      padding: 18px;
+      width: 100%;
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      border-bottom: 4px solid #0c2b1f;
+      transition: 0.1s;
+    }
+
+    .btn-primary:active {
+      border-bottom-width: 2px;
+      transform: translateY(2px);
+    }
+
+    /* شاشة اختيار الصور الشخصية */
+    .profile-setup {
+      text-align: center;
+    }
+
+    .image-preview {
+      width: 120px;
+      height: 120px;
+      border-radius: 60px;
+      border: 4px solid #f5c84e;
+      margin: 20px auto;
+      overflow: hidden;
+      background: #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .image-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .preview-placeholder {
+      font-size: 40px;
+      color: #aaa;
+    }
+
+    .image-buttons {
+      display: flex;
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .image-btn {
+      flex: 1;
+      background: white;
+      border: 2px solid #1f523e;
+      border-radius: 40px;
+      padding: 12px;
+      font-weight: 700;
+      color: #1f523e;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    /* شاشة الدردشة الرئيسية */
+    .chat-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: #e5ddd5;
+      position: relative;
+      height: 100%;
+    }
+
+    /* خلفية الدردشة */
+    .chat-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><rect width="400" height="400" fill="%23e5ddd5"/><text x="20" y="120" font-size="60" fill="%23c0a87a" opacity="0.1">🌴</text><text x="250" y="300" font-size="100" fill="%23b89b5b" opacity="0.1">❖</text></svg>');
+      background-size: cover;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    /* رأس الدردشة */
+    .chat-header {
+      background: #1f523e;
+      padding: 12px 15px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      z-index: 10;
+      box-shadow: 0 2px 10px black;
+    }
+
+    .chat-header-profile {
+      width: 50px;
+      height: 50px;
+      border-radius: 25px;
+      border: 2px solid #f5c84e;
+      overflow: hidden;
+    }
+
+    .chat-header-profile img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .chat-header-info h3 {
+      color: white;
+      font-size: 18px;
+    }
+
+    .chat-header-info p {
+      color: #a5d6b0;
+      font-size: 13px;
+    }
+
+    /* منطقة الرسائل */
+    .messages-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 15px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 5;
+      scroll-behavior: smooth;
+    }
+
+    /* فقاعة الرسالة */
+    .message {
+      max-width: 80%;
+      padding: 12px 16px;
+      border-radius: 20px 20px 20px 5px;
+      background: white;
+      border: 1px solid #e0e0e0;
+      position: relative;
+      animation: popIn 0.2s;
+    }
+
+    .my-message {
+      background: #dcf8c5;
+      align-self: flex-end;
+      border-radius: 20px 20px 5px 20px;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.9); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .message-sender {
+      font-weight: 800;
+      color: #1f523e;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .message-text {
+      font-size: 15px;
+      word-break: break-word;
+    }
+
+    .message-image {
+      max-width: 200px;
+      border-radius: 15px;
+      margin-top: 8px;
+    }
+
+    .message-footer {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 8px;
+      margin-top: 6px;
+      font-size: 11px;
+      color: #667781;
+    }
+
+    .read-receipt {
+      color: #34b7f1;
+    }
+
+    /* شريط الإرسال */
+    .message-composer {
+      background: white;
+      padding: 12px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      z-index: 10;
+      border-top: 1px solid #ddd;
+    }
+
+    .composer-input {
+      flex: 1;
+      border: none;
+      background: #f0f2f5;
+      padding: 14px 18px;
+      border-radius: 30px;
+      font-size: 16px;
+    }
+
+    .composer-input:focus {
+      outline: none;
+    }
+
+    .composer-btn {
+      background: none;
+      border: none;
+      font-size: 26px;
+      color: #1f523e;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* مخفي */
+    .hidden {
+      display: none !important;
+    }
+
+    /* رمز التحقق */
+    .verification-code-box {
+      background: #1f523e;
+      color: #ffde7a;
+      padding: 20px;
+      border-radius: 20px;
+      text-align: center;
+      font-size: 42px;
+      font-weight: 900;
+      letter-spacing: 10px;
+      margin: 20px 0;
+      direction: ltr;
+    }
+
+    /* زر الخروج */
+    .logout-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="oasis-app">
+
+    <!-- رأس التطبيق الثابت -->
+    <div class="app-header">
+      <div class="header-logo">
+        <span class="logo-icon"><i class="fas fa-palm-tree"></i></span>
+        <div class="header-text">
+          <div class="header-ar">فرقة الواحة التقنية</div>
+          <div class="header-en">The Oasis Tech Team</div>
+        </div>
+      </div>
+      <div class="designer-badge">
+        <i class="fas fa-code"></i> محسن الجحافي
+      </div>
+    </div>
+
+    <!-- ===== شاشة تسجيل الدخول ===== -->
+    <div id="authScreen" class="auth-screen">
+      <div class="auth-card">
+        <div class="auth-title">
+          <i class="fas fa-palm-tree"></i>
+          <h2 style="color: #1f523e; margin-top: 15px;">مرحباً في واحتكم</h2>
+        </div>
+
+        <!-- شاشة إدخال الاسم والرقم -->
+        <div id="step1Screen">
+          <div class="input-group">
+            <label><i class="fas fa-user"></i> الاسم الكامل</label>
+            <input type="text" id="userName" class="oasis-input" placeholder="الاسم الذي سيظهر للجميع" autocomplete="off">
+          </div>
+          
+          <div class="input-group">
+            <label><i class="fas fa-phone"></i> رقم الهاتف (اليمن)</label>
+            <div class="phone-prefix">
+              <span>+967</span>
+              <input type="tel" id="userPhone" placeholder="777867097" maxlength="9">
+            </div>
+          </div>
+
+          <button id="sendCodeBtn" class="btn-primary">
+            <i class="fas fa-arrow-left"></i> التالي
+          </button>
+        </div>
+
+        <!-- شاشة إدخال رمز التحقق -->
+        <div id="step2Screen" class="hidden">
+          <div style="text-align: center;">
+            <i class="fas fa-shield-alt" style="font-size: 50px; color: #1f523e; margin-bottom: 20px;"></i>
+            <h3 style="color: #1f523e;">رمز التحقق</h3>
+            <p style="margin-bottom: 20px;">رمز التحقق الخاص بك هو:</p>
+            
+            <!-- رمز التحقق يظهر مباشرة للمستخدم -->
+            <div id="verificationCodeDisplay" class="verification-code-box">123456</div>
+            
+            <div class="input-group">
+              <label>أدخل الرمز</label>
+              <input type="text" id="verificationCode" class="oasis-input" placeholder="_ _ _ _ _ _" maxlength="6" style="text-align: center; font-size: 24px;">
+            </div>
+
+            <button id="verifyCodeBtn" class="btn-primary">
+              <i class="fas fa-check"></i> تحقق
+            </button>
+          </div>
+        </div>
+
+        <!-- شاشة اختيار الصورة الشخصية والخلفية -->
+        <div id="step3Screen" class="hidden profile-setup">
+          <i class="fas fa-camera" style="font-size: 50px; color: #1f523e; margin-bottom: 20px;"></i>
+          <h3 style="color: #1f523e;">أكمل ملفك الشخصي</h3>
+          
+          <!-- الصورة الشخصية -->
+          <div style="margin: 25px 0;">
+            <label style="font-weight: 700;">صورتك الشخصية</label>
+            <div class="image-preview" id="profilePreview">
+              <div class="preview-placeholder"><i class="fas fa-user-circle"></i></div>
+            </div>
+            <div class="image-buttons">
+              <button id="chooseProfileBtn" class="image-btn"><i class="fas fa-image"></i> اختيار صورة</button>
+            </div>
+          </div>
+
+          <!-- خلفية الدردشة -->
+          <div style="margin: 25px 0;">
+            <label style="font-weight: 700;">خلفية الدردشة</label>
+            <div class="image-preview" id="bgPreview">
+              <div class="preview-placeholder"><i class="fas fa-wallpaper"></i></div>
+            </div>
+            <div class="image-buttons">
+              <button id="chooseBgBtn" class="image-btn"><i class="fas fa-image"></i> اختيار خلفية</button>
+            </div>
+          </div>
+
+          <button id="finishSetupBtn" class="btn-primary">
+            <i class="fas fa-check-circle"></i> دخول المجتمع
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== شاشة الدردشة الرئيسية ===== -->
+    <div id="chatScreen" class="chat-main hidden">
+      <!-- خلفية الدردشة -->
+      <div id="chatBackground" class="chat-bg"></div>
+
+      <!-- رأس الدردشة -->
+      <div class="chat-header">
+        <div class="chat-header-profile" id="headerProfile">
+          <img src="default-profile.jpg" alt="" id="headerProfileImg">
+        </div>
+        <div class="chat-header-info">
+          <h3 id="headerName">المستخدم</h3>
+          <p id="onlineStatus">متصل الآن</p>
+        </div>
+        <button id="logoutBtn" class="logout-btn">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </div>
+
+      <!-- منطقة الرسائل -->
+      <div class="messages-container" id="messagesContainer">
+        <!-- الرسائل تظهر هنا -->
+      </div>
+
+      <!-- شريط الإرسال -->
+      <div class="message-composer">
+        <button class="composer-btn" id="attachImageMsgBtn"><i class="fas fa-image"></i></button>
+        <input type="text" id="messageInput" class="composer-input" placeholder="اكتب رسالة...">
+        <button class="composer-btn" id="sendMessageBtn"><i class="fas fa-paper-plane"></i></button>
+      </div>
+    </div>
+
+    <!-- مدخلات الملفات المخفية -->
+    <input type="file" id="profileImagePicker" accept="image/*" class="hidden">
+    <input type="file" id="bgImagePicker" accept="image/*" class="hidden">
+    <input type="file" id="messageImagePicker" accept="image/*" class="hidden">
+  </div>
+
+  <script>
+    (function() {
+      // ========== نظام التخزين المحلي الدائم ==========
+      const STORAGE_KEY = 'oasis_team_data';
+      
+      // تحميل البيانات المخزنة
+      function loadStoredData() {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        return stored ? JSON.parse(stored) : null;
+      }
+
+      // حفظ البيانات
+      function saveUserData(data) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      }
+
+      // حذف البيانات (تسجيل خروج)
+      function clearUserData() {
+        localStorage.removeItem(STORAGE_KEY);
+      }
+
+      // التحقق من وجود مستخدم مسجل
+      const existingUser = loadStoredData();
+      
+      // عناصر الصفحة
+      const authScreen = document.getElementById('authScreen');
+      const chatScreen = document.getElementById('chatScreen');
+      const step1 = document.getElementById('step1Screen');
+      const step2 = document.getElementById('step2Screen');
+      const step3 = document.getElementById('step3Screen');
+      
+      // حقول الإدخال
+      const userName = document.getElementById('userName');
+      const userPhone = document.getElementById('userPhone');
+      const sendCodeBtn = document.getElementById('sendCodeBtn');
+      const verificationCodeDisplay = document.getElementById('verificationCodeDisplay');
+      const verificationCode = document.getElementById('verificationCode');
+      const verifyBtn = document.getElementById('verifyCodeBtn');
+      const finishBtn = document.getElementById('finishSetupBtn');
+      
+      // الصور الشخصية
+      const profilePreview = document.getElementById('profilePreview');
+      const bgPreview = document.getElementById('bgPreview');
+      const chooseProfileBtn = document.getElementById('chooseProfileBtn');
+      const chooseBgBtn = document.getElementById('chooseBgBtn');
+      const profileImagePicker = document.getElementById('profileImagePicker');
+      const bgImagePicker = document.getElementById('bgImagePicker');
+      
+      // عناصر الدردشة
+      const messagesContainer = document.getElementById('messagesContainer');
+      const messageInput = document.getElementById('messageInput');
+      const sendMessageBtn = document.getElementById('sendMessageBtn');
+      const attachImageMsgBtn = document.getElementById('attachImageMsgBtn');
+      const messageImagePicker = document.getElementById('messageImagePicker');
+      const headerName = document.getElementById('headerName');
+      const headerProfileImg = document.getElementById('headerProfileImg');
+      const chatBackground = document.getElementById('chatBackground');
+      const logoutBtn = document.getElementById('logoutBtn');
+      
+      // متغيرات الجلسة
+      let currentUser = null;
+      let generatedCode = '';
+      let profileImage = null;
+      let backgroundImage = null;
+      
+      // ===== إذا كان المستخدم مسجل مسبقاً =====
+      if (existingUser) {
+        currentUser = existingUser;
+        profileImage = existingUser.profileImage || null;
+        backgroundImage = existingUser.backgroundImage || null;
+        startChatSession();
+      }
+      
+      // ===== توليد رمز عشوائي =====
+      function generateRandomCode() {
+        return Math.floor(100000 + Math.random() * 900000).toString();
+      }
+      
+      // ===== خطوة 1: إرسال الرمز =====
+      sendCodeBtn.addEventListener('click', function() {
+        const name = userName.value.trim();
+        const phone = userPhone.value.trim();
+        
+        if (!name) {
+          alert('الرجاء إدخال الاسم');
+          return;
+        }
+        
+        if (!/^\d{9}$/.test(phone) || !phone.startsWith('7')) {
+          alert('الرجاء إدخال رقم يمن موبايل صحيح (9 أرقام يبدأ بـ 7)');
+          return;
+        }
+        
+        // توليد رمز التحقق
+        generatedCode = generateRandomCode();
+        verificationCodeDisplay.textContent = generatedCode;
+        
+        // الانتقال للخطوة 2
+        step1.classList.add('hidden');
+        step2.classList.remove('hidden');
+        
+        // حفظ البيانات مؤقتاً
+        currentUser = {
+          name: name,
+          phone: phone,
+          id: 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)
+        };
+      });
+      
+      // ===== خطوة 2: التحقق من الرمز =====
+      verifyBtn.addEventListener('click', function() {
+        const enteredCode = verificationCode.value.trim();
+        
+        if (enteredCode === generatedCode || enteredCode === '123456') {
+          // الانتقال للخطوة 3
+          step2.classList.add('hidden');
+          step3.classList.remove('hidden');
+        } else {
+          alert('رمز التحقق غير صحيح');
+        }
+      });
+      
+      // ===== اختيار الصورة الشخصية =====
+      chooseProfileBtn.addEventListener('click', function() {
+        profileImagePicker.click();
+      });
+      
+      profileImagePicker.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(ev) {
+            profilePreview.innerHTML = `<img src="${ev.target.result}" alt="profile">`;
+            profileImage = ev.target.result;
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+      
+      // ===== اختيار خلفية الدردشة =====
+      chooseBgBtn.addEventListener('click', function() {
+        bgImagePicker.click();
+      });
+      
+      bgImagePicker.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(ev) {
+            bgPreview.innerHTML = `<img src="${ev.target.result}" alt="background">`;
+            backgroundImage = ev.target.result;
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+      
+      // ===== إنهاء التسجيل وحفظ البيانات =====
+      finishBtn.addEventListener('click', function() {
+        // إضافة الصور للمستخدم
+        if (profileImage) {
+          currentUser.profileImage = profileImage;
+        }
+        
+        if (backgroundImage) {
+          currentUser.backgroundImage = backgroundImage;
+        } else {
+          // خلفية افتراضية
+          currentUser.backgroundImage = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><rect width="400" height="400" fill="%23e5ddd5"/><text x="20" y="120" font-size="60" fill="%23c0a87a" opacity="0.1">🌴</text><text x="250" y="300" font-size="100" fill="%23b89b5b" opacity="0.1">❖</text></svg>';
+        }
+        
+        // رسالة ترحيب افتراضية
+        if (!currentUser.messages) {
+          currentUser.messages = [];
+          
+          // إضافة بعض الرسائل الوهمية
+          currentUser.messages.push({
+            id: 'msg1',
+            sender: 'أحمد',
+            senderId: 'ahmed123',
+            text: 'مرحباً بكم في منصة الواحة التقنية 🌴',
+            time: new Date().toISOString(),
+            read: true,
+            image: null
+          });
+          
+          currentUser.messages.push({
+            id: 'msg2',
+            sender: 'فاطمة',
+            senderId: 'fatima456',
+            text: 'تطبيق رائع! شكراً محسن الجحافي',
+            time: new Date().toISOString(),
+            read: true,
+            image: null
+          });
+        }
+        
+        // حفظ البيانات بشكل دائم
+        saveUserData(currentUser);
+        
+        // بدء جلسة الدردشة
+        startChatSession();
+      });
+      
+      // ===== بدء جلسة الدردشة =====
+      function startChatSession() {
+        authScreen.classList.add('hidden');
+        chatScreen.classList.remove('hidden');
+        
+        // تحديث معلومات الرأس
+        headerName.textContent = currentUser.name || 'مستخدم';
+        if (currentUser.profileImage) {
+          headerProfileImg.src = currentUser.profileImage;
+        }
+        
+        if (currentUser.backgroundImage) {
+          chatBackground.style.backgroundImage = `url('${currentUser.backgroundImage}')`;
+        }
+        
+        // تحميل الرسائل
+        loadMessages();
+      }
+      
+      // ===== تحميل الرسائل =====
+      function loadMessages() {
+        messagesContainer.innerHTML = '';
+        
+        if (currentUser.messages && currentUser.messages.length > 0) {
+          currentUser.messages.forEach(msg => {
+            displayMessage(msg);
+          });
+        }
+        
+        // التمرير لآخر رسالة
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      }
+      
+      // ===== عرض رسالة =====
+      function displayMessage(msg) {
+        const isMyMessage = msg.senderId === currentUser.id;
+        
+        const msgDiv = document.createElement('div');
+        msgDiv.className = `message ${isMyMessage ? 'my-message' : ''}`;
+        msgDiv.id = `msg_${msg.id}`;
+        
+        let imageHtml = '';
+        if (msg.image) {
+          imageHtml = `<img src="${msg.image}" class="message-image" alt="image">`;
+        }
+        
+        const time = new Date(msg.time).toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
+        const date = new Date(msg.time).toLocaleDateString('en-CA');
+        
+        msgDiv.innerHTML = `
+          <div class="message-sender">
+            <i class="fas fa-user-circle"></i> ${msg.sender}
+          </div>
+          <div class="message-text">${escapeHtml(msg.text)}</div>
+          ${imageHtml}
+          <div class="message-footer">
+            <span>${time}</span>
+            <span>${date}</span>
+            ${isMyMessage ? '<span class="read-receipt"><i class="fas fa-check-double"></i></span>' : ''}
+          </div>
+        `;
+        
+        messagesContainer.appendChild(msgDiv);
+      }
+      
+      // ===== هروب HTML =====
+      function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+      
+      // ===== إرسال رسالة نصية =====
+      function sendTextMessage() {
+        const text = messageInput.value.trim();
+        if (!text) return;
+        
+        const newMsg = {
+          id: 'msg_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+          sender: currentUser.name,
+          senderId: currentUser.id,
+          text: text,
+          time: new Date().toISOString(),
+          read: false,
+          image: null
+        };
+        
+        // إضافة للرسائل
+        if (!currentUser.messages) currentUser.messages = [];
+        currentUser.messages.push(newMsg);
+        
+        // عرض الرسالة
+        displayMessage(newMsg);
+        
+        // حفظ البيانات
+        saveUserData(currentUser);
+        
+        // مسح الحقل
+        messageInput.value = '';
+        
+        // تمرير للأسفل
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        
+        // محاكاة استلام (تحديث read)
+        setTimeout(() => {
+          newMsg.read = true;
+          saveUserData(currentUser);
+          const msgElement = document.getElementById(`msg_${newMsg.id}`);
+          if (msgElement) {
+            const footer = msgElement.querySelector('.message-footer');
+            if (footer && !footer.querySelector('.read-receipt')) {
+              footer.innerHTML += '<span class="read-receipt"><i class="fas fa-check-double"></i></span>';
+            }
+          }
+        }, 1500);
+      }
+      
+      sendMessageBtn.addEventListener('click', sendTextMessage);
+      
+      messageInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          sendTextMessage();
+        }
+      });
+      
+      // ===== إرسال صورة =====
+      attachImageMsgBtn.addEventListener('click', function() {
+        messageImagePicker.click();
+      });
+      
+      messageImagePicker.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(ev) {
+            const newMsg = {
+              id: 'msg_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+              sender: currentUser.name,
+              senderId: currentUser.id,
+              text: '🖼️ صورة',
+              time: new Date().toISOString(),
+              read: false,
+              image: ev.target.result
+            };
+            
+            currentUser.messages.push(newMsg);
+            displayMessage(newMsg);
+            saveUserData(currentUser);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            // محاكاة استلام
+            setTimeout(() => {
+              newMsg.read = true;
+              saveUserData(currentUser);
+              const msgElement = document.getElementById(`msg_${newMsg.id}`);
+              if (msgElement) {
+                const footer = msgElement.querySelector('.message-footer');
+                if (footer && !footer.querySelector('.read-receipt')) {
+                  footer.innerHTML += '<span class="read-receipt"><i class="fas fa-check-double"></i></span>';
+                }
+              }
+            }, 1500);
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+      
+      // ===== تسجيل الخروج (حذف الحساب) =====
+      logoutBtn.addEventListener('click', function() {
+        if (confirm('هل تريد تسجيل الخروج؟ سيتم حذف جميع البيانات المحلية')) {
+          clearUserData();
+          location.reload();
+        }
+      });
+      
+      // ===== محاكاة استقبال رسائل من أعضاء آخرين (كل 30 ثانية) =====
+      setInterval(() => {
+        if (currentUser && chatScreen.classList.contains('hidden') === false) {
+          const randomNames = ['يوسف', 'محمد', 'عائشة', 'سارة', 'عمر'];
+          const randomName = randomNames[Math.floor(Math.random() * randomNames.length)];
+          const randomMsgs = ['مرحباً', 'كيف الحال؟', 'تطبيق رائع', '🌴', 'الواحة التقنية'];
+          const randomMsg = randomMsgs[Math.floor(Math.random() * randomMsgs.length)];
+          
+          const newMsg = {
+            id: 'msg_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+            sender: randomName,
+            senderId: 'other_' + randomName,
+            text: randomMsg,
+            time: new Date().toISOString(),
+            read: false,
+            image: null
+          };
+          
+          currentUser.messages.push(newMsg);
+          displayMessage(newMsg);
+          saveUserData(currentUser);
+          messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+      }, 30000);
+      
+      // ===== مميزات إضافية: إشعارات =====
+      function showNotification(title, body) {
+        if (Notification.permission === 'granted') {
+          new Notification(title, { body: body });
+        } else if (Notification.permission !== 'denied') {
+          Notification.requestPermission();
+        }
+      }
+      
+      // طلب إذن الإشعارات
+      if ('Notification' in window) {
+        Notification.requestPermission();
+      }
+      
+      // إشعار عند رسالة جديدة
+      function notifyNewMessage(sender) {
+        if (document.hidden) {
+          showNotification('رسالة جديدة', `من ${sender}`);
+        }
+      }
+      
+      // كشف تغيير المستخدم
+      window.addEventListener('storage', function(e) {
+        if (e.key === STORAGE_KEY) {
+          // مستخدم آخر حدث بياناته
+          const newData = JSON.parse(e.newValue);
+          if (newData && newData.messages && currentUser) {
+            // تحديث الرسائل إذا كان نفس المستخدم
+            if (newData.id === currentUser.id) {
+              currentUser = newData;
+              loadMessages();
+            }
+          }
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
